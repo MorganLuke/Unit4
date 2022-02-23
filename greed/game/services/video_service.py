@@ -107,3 +107,8 @@ class VideoService:
             pyray.draw_line(0, y, self._width, y, pyray.GRAY)
         for x in range(0, self._width, self._cell_size):
             pyray.draw_line(x, 0, x, self._height, pyray.GRAY)
+
+    def increase_frame_rate(self):
+        """Increases and sets the frame rate by 1"""
+        self._frame_rate += 1
+        pyray.set_target_fps(self._frame_rate)

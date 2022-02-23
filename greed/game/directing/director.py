@@ -47,6 +47,18 @@ class Director:
         velocity = self._keyboard_service.get_direction()
         robot.set_velocity(velocity)
 
+        # sets the upper y limit of the screen that the robot can travel and not wrap the screen
+        if robot.get_position().get_y() <= 420:
+            y = 420
+            x = robot.get_position().get_x()     
+            robot.set_position(Point(x, y))
+        # sets the lower y limit of the screen that the robot can travel and not wrap the screen
+        elif robot.get_position().get_y() >= 570:
+            y = 570
+            x = robot.get_position().get_x()     
+            robot.set_position(Point(x, y))
+
+
     def _do_updates(self, cast):
         """Updates the robot's and other actor's positions and resolves any collisions with artifacts.
         
@@ -72,6 +84,9 @@ class Director:
                 points = banner.get_value() + artifact.get_value()
                 banner.set_value(points)
                 banner.set_text(f"Score: {points}")
+
+                # increases the frame rate each time a artifact is captured
+                self._video_service.increase_frame_rate()
 
                 # Checks to add the banner with the respective color and points
                 if artifact.get_value() >= 1:
